@@ -12,7 +12,6 @@ class Main extends Component {
           const ime = this.ime.value
           const cena = window.web3.utils.toWei(this.cena.value.toString(), 'Ether')
           const lokacija = this.lokacija.value
-          const vrnjenaLokacija = this.vrnjenaLokacija.value;
           this.props.dodaj_vozilo(ime, cena, lokacija)
         }}>
           <div className="form-group mr-sm-2">

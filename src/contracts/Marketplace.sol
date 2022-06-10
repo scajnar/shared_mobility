@@ -72,32 +72,18 @@ contract Marketplace {
 
 
     function sposodi_vozilo(uint _id) public payable{
-    // Fetch the product
     Vozilo memory _vozilo = vozila[_id];
-    // Fetch the owner
     address payable _prodajalec = _vozilo.lastnik;
-    // Make sure the product has a valid id
     require(_vozilo.id > 0 && _vozilo.id <= stevilo_vozil);
-    // Require that there is enough Ether in the transaction
     require(msg.value >= _vozilo.cena);
-    // Require that the product has not been purchased already
     require(_vozilo.na_voljo);
-    // Require that the buyer is not the seller
     require(_prodajalec != msg.sender);
-    // Transfer ownership to the buyer
-    //_vozilo.lastnik = msg.sender;
     _vozilo.sposojevalec = msg.sender;
-    // Mark as purchased
     _vozilo.na_voljo = false;
-    // Update the product
-    //sprememba lokacije na v tranzitu
     _vozilo.lokacija = "V tranzitu";
-    //_vozilo.lastnik = _vozilo.lastnik;
     vozila[_id] = _vozilo;
     
-    // Pay the seller by sending them Ether
     address(_prodajalec).transfer(msg.value);
-    // Trigger an event
     emit VoziloSposojeno(stevilo_vozil, _vozilo.ime, _vozilo.cena, _vozilo.lastnik, false, _vozilo.lokacija, _vozilo.sposojevalec);
     }
 
